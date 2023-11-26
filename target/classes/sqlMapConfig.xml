@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration> 
+	<!-- MyBatis 的全局参数设置，基本用来进行 MyBatis 的优化处理 -->
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="cacheEnabled" value="true" />
+	</settings>
+	<typeAliases>
+		<package name="com.ls.pojo" />
+	</typeAliases>
+	<mappers>
+
+	<mapper resource="MapperDemo.xml"/>
+</mappers>
+</configuration>
+<!-- 全局配置文件 -->

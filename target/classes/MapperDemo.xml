@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+ 						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 
+ 	高級mapper代理
+	命名空间 namespace 如果使用 mapper 代理，需要指定 mapper 的地址
+ -->
+<mapper namespace="com.ls.mapper.MapperDemo">
+	<select id="insertUsers" parameterType="String" >
+		insert into users(user,sex,phone,address,note)values(#{user},#{sex},#{phone},#{address},#{note})
+	</select>
+</mapper>

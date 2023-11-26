@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 配置属性占位符资源文件 -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+	<!-- 配置 C3P0 数据库链接池 -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		p:driverClass="${jdbc.driver}" p:jdbcUrl="${jdbc.url}"
+		p:user="${jdbc.user}" p:password="${jdbc.password}"
+		p:initialPoolSize="5" p:maxPoolSize="20" p:minPoolSize="5"
+		p:maxIdleTime="200" />
+	<!-- 配置 SqlSessionFactory -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:configLocation="classpath:sqlMapConfig.xml" />
+	<!-- 配置 mapper 扫描器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		p:basePackage="com.ls.mapper"
+		p:sqlSessionFactoryBeanName="sqlSessionFactory" />
+	<!--邮件配置 -->
+	<context:property-placeholder
+		location="classpath:mail.properties" ignore-unresolvable="true" />
+	<!--配置邮件接口 -->
+	<bean id="javaMailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.smtp.host}" />
+		<property name="username" value="${mail.smtp.username}" />
+		<property name="password" value="${mail.smtp.password}" />
+		<property name="defaultEncoding"
+			value="${mail.smtp.defaultEncoding}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
